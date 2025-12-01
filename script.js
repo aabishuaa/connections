@@ -257,8 +257,9 @@ const app = {
             groups: puzzle.groups
         };
 
-        const json = JSON.stringify(exportData, null, 2);
-        document.getElementById('export-json').value = json;
+        // Encrypt the puzzle data
+        const encrypted = this.encryptPuzzle(exportData);
+        document.getElementById('export-json').value = encrypted;
         document.getElementById('export-modal').classList.add('active');
     },
 
@@ -274,14 +275,22 @@ const app = {
     },
 
     previewImport() {
-        const json = document.getElementById('import-json').value.trim();
-        if (!json) {
-            alert('Please paste puzzle JSON first!');
+        const data = document.getElementById('import-json').value.trim();
+        if (!data) {
+            alert('Please paste puzzle data first!');
             return;
         }
 
         try {
-            const puzzle = JSON.parse(json);
+            let puzzle;
+
+            // Check if data is encrypted or plain JSON
+            if (this.isEncrypted(data)) {
+                puzzle = this.decryptPuzzle(data);
+            } else {
+                puzzle = JSON.parse(data);
+            }
+
             this.validatePuzzleData(puzzle);
 
             // Show preview
@@ -309,19 +318,27 @@ const app = {
 
             previewDiv.style.display = 'block';
         } catch (error) {
-            alert('Invalid JSON: ' + error.message);
+            alert('Invalid puzzle data: ' + error.message);
         }
     },
 
     importPuzzle() {
-        const json = document.getElementById('import-json').value.trim();
-        if (!json) {
-            alert('Please paste puzzle JSON first!');
+        const data = document.getElementById('import-json').value.trim();
+        if (!data) {
+            alert('Please paste puzzle data first!');
             return;
         }
 
         try {
-            const puzzleData = JSON.parse(json);
+            let puzzleData;
+
+            // Check if data is encrypted or plain JSON
+            if (this.isEncrypted(data)) {
+                puzzleData = this.decryptPuzzle(data);
+            } else {
+                puzzleData = JSON.parse(data);
+            }
+
             this.validatePuzzleData(puzzleData);
 
             // Add ID and timestamp
@@ -586,6 +603,53 @@ const app = {
             if (arr1[i] !== arr2[i]) return false;
         }
         return true;
+    },
+
+    // ==================== ENCRYPTION/DECRYPTION ====================
+
+    // Encryption key (hardcoded for easy sharing)
+    encryptionKey: 'ConnectionsGame2024SecretKey!',
+
+    // Encrypt puzzle data
+    encryptPuzzle(puzzleData) {
+        const json = JSON.stringify(puzzleData);
+        const encrypted = this.xorEncrypt(json, this.encryptionKey);
+        return btoa(encrypted); // Base64 encode
+    },
+
+    // Decrypt puzzle data
+    decryptPuzzle(encryptedData) {
+        try {
+            const decoded = atob(encryptedData); // Base64 decode
+            const decrypted = this.xorEncrypt(decoded, this.encryptionKey);
+            return JSON.parse(decrypted);
+        } catch (error) {
+            throw new Error('Invalid encrypted puzzle data');
+        }
+    },
+
+    // XOR encryption/decryption (symmetric)
+    xorEncrypt(text, key) {
+        let result = '';
+        for (let i = 0; i < text.length; i++) {
+            const charCode = text.charCodeAt(i) ^ key.charCodeAt(i % key.length);
+            result += String.fromCharCode(charCode);
+        }
+        return result;
+    },
+
+    // Check if data is encrypted (base64 format without { character)
+    isEncrypted(data) {
+        const trimmed = data.trim();
+        // If it starts with '{' it's likely plain JSON
+        if (trimmed.startsWith('{')) return false;
+        // Try to decode as base64
+        try {
+            const decoded = atob(trimmed);
+            return true;
+        } catch {
+            return false;
+        }
     }
 };
 
