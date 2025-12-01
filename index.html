@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connections Lab - Abishua & Chrisanne</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Home Screen -->
+    <div id="home-screen" class="screen active">
+        <div class="container">
+            <header>
+                <h1>🧩 Connections Lab</h1>
+                <p class="subtitle">Abishua & Chrisanne</p>
+            </header>
+
+            <div class="action-buttons">
+                <button onclick="app.showCreateScreen()" class="btn btn-primary">Create New Puzzle</button>
+                <button onclick="app.showImportScreen()" class="btn btn-secondary">Import Puzzle</button>
+            </div>
+
+            <div class="puzzles-section">
+                <h2>Your Puzzles</h2>
+                <div id="puzzles-list" class="puzzles-list">
+                    <!-- Puzzles will be rendered here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create/Edit Screen -->
+    <div id="create-screen" class="screen">
+        <div class="container">
+            <header>
+                <h1>Create Puzzle</h1>
+                <button onclick="app.showHomeScreen()" class="btn-back">← Back to Home</button>
+            </header>
+
+            <div class="editor-layout">
+                <div class="editor-form">
+                    <div class="form-group">
+                        <label for="puzzle-title">Puzzle Title</label>
+                        <input type="text" id="puzzle-title" placeholder="My Awesome Puzzle" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="puzzle-description">Description (optional)</label>
+                        <input type="text" id="puzzle-description" placeholder="A fun puzzle about...">
+                    </div>
+
+                    <div id="groups-form">
+                        <!-- Groups will be rendered here -->
+                    </div>
+
+                    <div class="form-actions">
+                        <button onclick="app.savePuzzle()" class="btn btn-primary">Save Puzzle</button>
+                        <button onclick="app.exportPuzzle()" class="btn btn-secondary">Export Puzzle</button>
+                        <button onclick="app.showHomeScreen()" class="btn btn-text">Cancel</button>
+                    </div>
+                </div>
+
+                <div class="editor-preview">
+                    <h3>Live Preview</h3>
+                    <div id="preview-grid" class="word-grid preview">
+                        <!-- Preview will be rendered here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Import Screen -->
+    <div id="import-screen" class="screen">
+        <div class="container">
+            <header>
+                <h1>Import Puzzle</h1>
+                <button onclick="app.showHomeScreen()" class="btn-back">← Back to Home</button>
+            </header>
+
+            <div class="import-section">
+                <div class="form-group">
+                    <label for="import-json">Paste Puzzle JSON</label>
+                    <textarea id="import-json" rows="10" placeholder='{"title":"Example","description":"...","groups":[...]}'></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button onclick="app.previewImport()" class="btn btn-secondary">Preview</button>
+                    <button onclick="app.importPuzzle()" class="btn btn-primary">Import & Save</button>
+                </div>
+
+                <div id="import-preview" class="import-preview" style="display: none;">
+                    <h3>Preview</h3>
+                    <div id="import-preview-content"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Export Modal -->
+    <div id="export-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Export Puzzle</h2>
+                <button onclick="app.closeExportModal()" class="btn-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Copy this JSON to share with your friend:</p>
+                <textarea id="export-json" rows="10" readonly></textarea>
+                <button onclick="app.copyExportJson()" class="btn btn-primary">Copy to Clipboard</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Play Screen -->
+    <div id="play-screen" class="screen">
+        <div class="container">
+            <header>
+                <h1 id="play-title">Puzzle Title</h1>
+                <p id="play-description" class="subtitle"></p>
+                <button onclick="app.showHomeScreen()" class="btn-back">← Back to Home</button>
+            </header>
+
+            <div class="game-container">
+                <!-- Solved groups appear here -->
+                <div id="solved-groups" class="solved-groups"></div>
+
+                <!-- Active word grid -->
+                <div id="game-grid" class="word-grid"></div>
+
+                <!-- Game controls -->
+                <div class="game-controls">
+                    <div class="strikes">
+                        <span id="strikes-display">Strikes: 0 / 4</span>
+                    </div>
+                    <div class="control-buttons">
+                        <button onclick="app.clearSelection()" class="btn btn-text">Clear Selection</button>
+                        <button onclick="app.submitSelection()" id="submit-btn" class="btn btn-primary" disabled>Submit</button>
+                    </div>
+                    <button onclick="app.resetPuzzle()" class="btn btn-secondary reset-btn">Reset Puzzle</button>
+                </div>
+            </div>
+
+            <!-- Win modal -->
+            <div id="win-modal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>🎉 You Solved It!</h2>
+                    </div>
+                    <div class="modal-body">
+                        <p class="win-message">Congratulations! You found all the connections!</p>
+                        <div id="win-summary"></div>
+                        <button onclick="app.closeWinModal()" class="btn btn-primary">Close</button>
+                        <button onclick="app.resetPuzzle(); app.closeWinModal();" class="btn btn-secondary">Play Again</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
