@@ -470,13 +470,13 @@ header h1 {
     font-size: 0.9em;
 }
 
-.win-message {
+.win-message, .gameover-message {
     font-size: 1.2em;
     text-align: center;
     margin-bottom: 20px;
 }
 
-#win-summary {
+#win-summary, #gameover-summary {
     display: flex;
     flex-direction: column;
     gap: 10px;

@@ -505,8 +505,7 @@ const app = {
             // Check for loss
             if (this.gameState.strikes >= maxStrikes) {
                 setTimeout(() => {
-                    alert(`Game Over! You've used all ${maxStrikes} strikes. Resetting puzzle...`);
-                    this.resetPuzzle();
+                    this.showGameOverModal();
                 }, 500);
             }
         }
@@ -553,6 +552,28 @@ const app = {
 
     closeWinModal() {
         document.getElementById('win-modal').classList.remove('active');
+    },
+
+    showGameOverModal() {
+        const modal = document.getElementById('gameover-modal');
+        const summary = document.getElementById('gameover-summary');
+
+        // Show all groups with their answers
+        summary.innerHTML = this.gameState.puzzle.groups.map((group, index) => {
+            const isSolved = this.gameState.solvedGroups.includes(index);
+            return `
+                <div class="solved-group ${group.color}">
+                    <h3>${group.categoryName} ${isSolved ? '✓' : ''}</h3>
+                    <div class="words">${group.words.join(', ')}</div>
+                </div>
+            `;
+        }).join('');
+
+        modal.classList.add('active');
+    },
+
+    closeGameOverModal() {
+        document.getElementById('gameover-modal').classList.remove('active');
     },
 
     // ==================== UI RENDERING ====================
