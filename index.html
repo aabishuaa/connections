@@ -80,8 +80,8 @@
 
             <div class="import-section">
                 <div class="form-group">
-                    <label for="import-json">Paste Puzzle JSON</label>
-                    <textarea id="import-json" rows="10" placeholder='{"title":"Example","description":"...","groups":[...]}'></textarea>
+                    <label for="import-json">Paste Encrypted Puzzle Data</label>
+                    <textarea id="import-json" rows="10" placeholder='Paste the encrypted puzzle data here...'></textarea>
                 </div>
 
                 <div class="form-actions">
@@ -105,7 +105,8 @@
                 <button onclick="app.closeExportModal()" class="btn-close">&times;</button>
             </div>
             <div class="modal-body">
-                <p>Copy this JSON to share with your friend:</p>
+                <p>Copy this encrypted puzzle data to share with your friend:</p>
+                <p style="font-size: 0.9em; color: #666; margin-top: 5px;">The puzzle is encrypted so they can't see the categories before playing!</p>
                 <textarea id="export-json" rows="10" readonly></textarea>
                 <button onclick="app.copyExportJson()" class="btn btn-primary">Copy to Clipboard</button>
             </div>
