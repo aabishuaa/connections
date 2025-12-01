@@ -155,6 +155,21 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Game Over modal -->
+            <div id="gameover-modal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>😞 Game Over!</h2>
+                    </div>
+                    <div class="modal-body">
+                        <p class="gameover-message">You've used all your strikes. Here are the answers:</p>
+                        <div id="gameover-summary"></div>
+                        <button onclick="app.resetPuzzle(); app.closeGameOverModal();" class="btn btn-primary">Try Again</button>
+                        <button onclick="app.showHomeScreen(); app.closeGameOverModal();" class="btn btn-secondary">Back to Home</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
