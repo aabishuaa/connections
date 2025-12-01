@@ -547,6 +547,12 @@ const app = {
             </div>
         `).join('');
 
+        // Re-initialize icons
+        lucide.createIcons();
+
+        // Trigger confetti animation
+        this.createConfetti();
+
         modal.classList.add('active');
     },
 
@@ -563,11 +569,14 @@ const app = {
             const isSolved = this.gameState.solvedGroups.includes(index);
             return `
                 <div class="solved-group ${group.color}">
-                    <h3>${group.categoryName} ${isSolved ? '✓' : ''}</h3>
+                    <h3>${group.categoryName} ${isSolved ? '<i data-lucide="check-circle" class="inline-icon"></i>' : ''}</h3>
                     <div class="words">${group.words.join(', ')}</div>
                 </div>
             `;
         }).join('');
+
+        // Re-initialize icons
+        lucide.createIcons();
 
         modal.classList.add('active');
     },
@@ -595,12 +604,24 @@ const app = {
                     <p>${puzzle.description || 'No description'}</p>
                     <p style="font-size: 0.85em; color: #999;">Created: ${new Date(puzzle.createdAt).toLocaleDateString()}</p>
                     <div class="puzzle-card-actions">
-                        <button onclick="app.showPlayScreen('${puzzle.id}')" class="btn btn-primary">Play</button>
-                        <button onclick="app.showCreateScreen('${puzzle.id}')" class="btn btn-secondary">Edit</button>
-                        <button onclick="app.deletePuzzleById('${puzzle.id}')" class="btn btn-danger">Delete</button>
+                        <button onclick="app.showPlayScreen('${puzzle.id}')" class="btn btn-primary">
+                            <i data-lucide="play"></i>
+                            Play
+                        </button>
+                        <button onclick="app.showCreateScreen('${puzzle.id}')" class="btn btn-secondary">
+                            <i data-lucide="edit"></i>
+                            Edit
+                        </button>
+                        <button onclick="app.deletePuzzleById('${puzzle.id}')" class="btn btn-danger">
+                            <i data-lucide="trash-2"></i>
+                            Delete
+                        </button>
                     </div>
                 </div>
             `).join('');
+
+        // Re-initialize icons
+        lucide.createIcons();
     },
 
     // ==================== UTILITY FUNCTIONS ====================
@@ -670,6 +691,29 @@ const app = {
             return true;
         } catch {
             return false;
+        }
+    },
+
+    // Create confetti animation
+    createConfetti() {
+        const colors = ['#667eea', '#4CAF50', '#FFD700', '#f44336', '#2196F3', '#764ba2'];
+        const confettiCount = 100;
+
+        for (let i = 0; i < confettiCount; i++) {
+            setTimeout(() => {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                confetti.style.animationDelay = (Math.random() * 0.5) + 's';
+                document.body.appendChild(confetti);
+
+                // Remove confetti after animation
+                setTimeout(() => {
+                    confetti.remove();
+                }, 4000);
+            }, i * 30);
         }
     }
 };

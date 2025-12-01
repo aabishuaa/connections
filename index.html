@@ -5,19 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connections Lab - Abishua & Chrisanne</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
     <!-- Home Screen -->
     <div id="home-screen" class="screen active">
         <div class="container">
             <header>
-                <h1>🧩 Connections Lab</h1>
+                <h1><i data-lucide="puzzle" class="header-icon"></i> Connections Lab</h1>
                 <p class="subtitle">Abishua & Chrisanne</p>
             </header>
 
             <div class="action-buttons">
-                <button onclick="app.showCreateScreen()" class="btn btn-primary">Create New Puzzle</button>
-                <button onclick="app.showImportScreen()" class="btn btn-secondary">Import Puzzle</button>
+                <button onclick="app.showCreateScreen()" class="btn btn-primary">
+                    <i data-lucide="plus-circle"></i>
+                    Create New Puzzle
+                </button>
+                <button onclick="app.showImportScreen()" class="btn btn-secondary">
+                    <i data-lucide="download"></i>
+                    Import Puzzle
+                </button>
             </div>
 
             <div class="puzzles-section">
@@ -34,7 +41,10 @@
         <div class="container">
             <header>
                 <h1>Create Puzzle</h1>
-                <button onclick="app.showHomeScreen()" class="btn-back">← Back to Home</button>
+                <button onclick="app.showHomeScreen()" class="btn-back">
+                    <i data-lucide="arrow-left"></i>
+                    Back to Home
+                </button>
             </header>
 
             <div class="editor-layout">
@@ -54,9 +64,18 @@
                     </div>
 
                     <div class="form-actions">
-                        <button onclick="app.savePuzzle()" class="btn btn-primary">Save Puzzle</button>
-                        <button onclick="app.exportPuzzle()" class="btn btn-secondary">Export Puzzle</button>
-                        <button onclick="app.showHomeScreen()" class="btn btn-text">Cancel</button>
+                        <button onclick="app.savePuzzle()" class="btn btn-primary">
+                            <i data-lucide="save"></i>
+                            Save Puzzle
+                        </button>
+                        <button onclick="app.exportPuzzle()" class="btn btn-secondary">
+                            <i data-lucide="upload"></i>
+                            Export Puzzle
+                        </button>
+                        <button onclick="app.showHomeScreen()" class="btn btn-text">
+                            <i data-lucide="x"></i>
+                            Cancel
+                        </button>
                     </div>
                 </div>
 
@@ -75,7 +94,10 @@
         <div class="container">
             <header>
                 <h1>Import Puzzle</h1>
-                <button onclick="app.showHomeScreen()" class="btn-back">← Back to Home</button>
+                <button onclick="app.showHomeScreen()" class="btn-back">
+                    <i data-lucide="arrow-left"></i>
+                    Back to Home
+                </button>
             </header>
 
             <div class="import-section">
@@ -85,8 +107,14 @@
                 </div>
 
                 <div class="form-actions">
-                    <button onclick="app.previewImport()" class="btn btn-secondary">Preview</button>
-                    <button onclick="app.importPuzzle()" class="btn btn-primary">Import & Save</button>
+                    <button onclick="app.previewImport()" class="btn btn-secondary">
+                        <i data-lucide="eye"></i>
+                        Preview
+                    </button>
+                    <button onclick="app.importPuzzle()" class="btn btn-primary">
+                        <i data-lucide="download"></i>
+                        Import & Save
+                    </button>
                 </div>
 
                 <div id="import-preview" class="import-preview" style="display: none;">
@@ -102,13 +130,18 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2>Export Puzzle</h2>
-                <button onclick="app.closeExportModal()" class="btn-close">&times;</button>
+                <button onclick="app.closeExportModal()" class="btn-close">
+                    <i data-lucide="x"></i>
+                </button>
             </div>
             <div class="modal-body">
                 <p>Copy this encrypted puzzle data to share with your friend:</p>
                 <p style="font-size: 0.9em; color: #666; margin-top: 5px;">The puzzle is encrypted so they can't see the categories before playing!</p>
                 <textarea id="export-json" rows="10" readonly></textarea>
-                <button onclick="app.copyExportJson()" class="btn btn-primary">Copy to Clipboard</button>
+                <button onclick="app.copyExportJson()" class="btn btn-primary">
+                    <i data-lucide="copy"></i>
+                    Copy to Clipboard
+                </button>
             </div>
         </div>
     </div>
@@ -119,7 +152,10 @@
             <header>
                 <h1 id="play-title">Puzzle Title</h1>
                 <p id="play-description" class="subtitle"></p>
-                <button onclick="app.showHomeScreen()" class="btn-back">← Back to Home</button>
+                <button onclick="app.showHomeScreen()" class="btn-back">
+                    <i data-lucide="arrow-left"></i>
+                    Back to Home
+                </button>
             </header>
 
             <div class="game-container">
@@ -135,10 +171,19 @@
                         <span id="strikes-display">Strikes: 0 / 4</span>
                     </div>
                     <div class="control-buttons">
-                        <button onclick="app.clearSelection()" class="btn btn-text">Clear Selection</button>
-                        <button onclick="app.submitSelection()" id="submit-btn" class="btn btn-primary" disabled>Submit</button>
+                        <button onclick="app.clearSelection()" class="btn btn-text">
+                            <i data-lucide="rotate-ccw"></i>
+                            Clear Selection
+                        </button>
+                        <button onclick="app.submitSelection()" id="submit-btn" class="btn btn-primary" disabled>
+                            <i data-lucide="check-circle"></i>
+                            Submit
+                        </button>
                     </div>
-                    <button onclick="app.resetPuzzle()" class="btn btn-secondary reset-btn">Reset Puzzle</button>
+                    <button onclick="app.resetPuzzle()" class="btn btn-secondary reset-btn">
+                        <i data-lucide="refresh-cw"></i>
+                        Reset Puzzle
+                    </button>
                 </div>
             </div>
 
@@ -146,13 +191,22 @@
             <div id="win-modal" class="modal">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h2>🎉 You Solved It!</h2>
+                        <h2>
+                            <i data-lucide="trophy" class="modal-icon trophy-icon"></i>
+                            You Solved It!
+                        </h2>
                     </div>
                     <div class="modal-body">
                         <p class="win-message">Congratulations! You found all the connections!</p>
                         <div id="win-summary"></div>
-                        <button onclick="app.closeWinModal()" class="btn btn-primary">Close</button>
-                        <button onclick="app.resetPuzzle(); app.closeWinModal();" class="btn btn-secondary">Play Again</button>
+                        <button onclick="app.closeWinModal()" class="btn btn-primary">
+                            <i data-lucide="check"></i>
+                            Close
+                        </button>
+                        <button onclick="app.resetPuzzle(); app.closeWinModal();" class="btn btn-secondary">
+                            <i data-lucide="play"></i>
+                            Play Again
+                        </button>
                     </div>
                 </div>
             </div>
@@ -161,13 +215,22 @@
             <div id="gameover-modal" class="modal">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h2>😞 Game Over!</h2>
+                        <h2>
+                            <i data-lucide="frown" class="modal-icon gameover-icon"></i>
+                            Game Over!
+                        </h2>
                     </div>
                     <div class="modal-body">
                         <p class="gameover-message">You've used all your strikes. Here are the answers:</p>
                         <div id="gameover-summary"></div>
-                        <button onclick="app.resetPuzzle(); app.closeGameOverModal();" class="btn btn-primary">Try Again</button>
-                        <button onclick="app.showHomeScreen(); app.closeGameOverModal();" class="btn btn-secondary">Back to Home</button>
+                        <button onclick="app.resetPuzzle(); app.closeGameOverModal();" class="btn btn-primary">
+                            <i data-lucide="rotate-cw"></i>
+                            Try Again
+                        </button>
+                        <button onclick="app.showHomeScreen(); app.closeGameOverModal();" class="btn btn-secondary">
+                            <i data-lucide="home"></i>
+                            Back to Home
+                        </button>
                     </div>
                 </div>
             </div>
@@ -175,5 +238,11 @@
     </div>
 
     <script src="script.js"></script>
+    <script>
+        // Initialize Lucide icons when DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+        });
+    </script>
 </body>
 </html>
